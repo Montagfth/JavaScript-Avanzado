@@ -3,7 +3,7 @@
 Presentamos una breve descripcion para los proyectos:
 ### Practica Calificada II | Proyecto: "Sistema de Pagos Estudiantiles"
 
-# Sistema de Pagos Estudiantiles
+# Practica Calificada II | Proyecto: "Sistema de Pagos Estudiantiles"
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
 
