@@ -23,7 +23,6 @@ const materialLabel: Record<string, string> = {
 const VALID_PRINT_TYPES: PrintType[] = ['digital', 'offset', 'gran_formato', 'serigrafia'];
 const VALID_SIZES: Size[] = ['A4', 'A3', 'A2', 'A1', 'A0', 'personalizado'];
 const VALID_MATERIALS: Material[] = ['papel_bond', 'papel_couche', 'cartulina', 'vinilo', 'lona'];
-const VALID_STATUSES: Status[] = ['pendiente', 'en_produccion', 'completado'];
 
 interface ImportRow {
   client_name: string;
@@ -292,7 +291,7 @@ export default function Orders() {
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
           <Loader2 className="animate-spin text-sky-600 mx-auto mb-4" size={40} />
-          <p className="text-gray-600 font-medium">Cargando pedidos...</p>
+          <p className="text-gray-600 dark:text-gray-300 font-medium">Cargando pedidos...</p>
         </div>
       </div>
     );
@@ -319,8 +318,8 @@ export default function Orders() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-black text-gray-900">Gestión de Pedidos</h1>
-          <p className="text-gray-500 mt-1">{orders.length} pedidos en el sistema</p>
+          <h1 className="text-3xl font-black text-gray-900 dark:text-gray-50">Gestión de Pedidos</h1>
+          <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">{orders.length} pedidos en el sistema</p>
         </div>
         <button
           onClick={() => fileInputRef.current?.click()}
@@ -340,7 +339,7 @@ export default function Orders() {
             className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
               filterStatus === status
                 ? 'bg-sky-600 text-white shadow-lg'
-                : 'bg-white text-gray-700 border border-gray-200 hover:border-gray-300'
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:border-gray-600'
             }`}
           >
             {status === 'all'
@@ -357,18 +356,18 @@ export default function Orders() {
       {/* Search and Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1 relative">
-          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
           <input
             type="text"
             placeholder="Buscar cliente, tamaño, material..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+            className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
           />
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-50 transition-all"
+          className="flex items-center gap-2 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
         >
           <Filter size={18} />
           Ordenar
@@ -377,7 +376,7 @@ export default function Orders() {
 
       {/* Sort Options */}
       {showFilters && (
-        <div className="bg-white rounded-xl border border-gray-200 p-4 grid grid-cols-3 gap-2 animate-in fade-in slide-in-from-top">
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 grid grid-cols-3 gap-2 animate-in fade-in slide-in-from-top">
           {[
             { id: 'date', label: '📅 Más Reciente' },
             { id: 'quantity', label: '📦 Mayor Cantidad' },
@@ -392,7 +391,7 @@ export default function Orders() {
               className={`p-2 rounded-lg text-sm font-medium transition-all ${
                 sortBy === opt.id
                   ? 'bg-sky-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-100 text-gray-700 dark:text-gray-200 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
               {opt.label}
@@ -402,59 +401,59 @@ export default function Orders() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+            <thead className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 border-b border-gray-200 dark:border-gray-700">
               <tr>
                 {['Cliente', 'Tipo', 'Tamaño', 'Cant.', 'Material', 'Predicho', 'Real', 'Estado', 'Acciones'].map((h) => (
                   <th
                     key={h}
-                    className="text-left py-4 px-4 text-xs font-bold text-gray-600 uppercase tracking-wider"
+                    className="text-left py-4 px-4 text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider"
                   >
                     {h}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="py-16 text-center text-gray-400 font-medium">
+                  <td colSpan={9} className="py-16 text-center text-gray-400 dark:text-gray-500 font-medium">
                     <p className="text-lg mb-2">📋 No se encontraron pedidos</p>
                     <p className="text-sm">Intenta con otros criterios de búsqueda</p>
                   </td>
                 </tr>
               ) : (
                 filtered.map((order) => (
-                  <tr key={order.id} className="hover:bg-sky-50/50 transition-colors group">
+                  <tr key={order.id} className="hover:bg-sky-50/50 dark:hover:bg-gray-700/40 transition-colors group">
                     <td className="py-4 px-4">
-                      <div className="font-semibold text-gray-800">{order.client_name}</div>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="font-semibold text-gray-800 dark:text-gray-100">{order.client_name}</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                         {new Date(order.created_at).toLocaleDateString()}
                       </div>
                     </td>
                     <td className="py-4 px-4">
-                      <span className="text-gray-700 font-medium capitalize">
+                      <span className="text-gray-700 dark:text-gray-200 font-medium capitalize">
                         {printTypeLabel[order.print_type] ?? order.print_type}
                       </span>
                     </td>
-                    <td className="py-4 px-4 text-gray-600 font-medium">{order.size}</td>
+                    <td className="py-4 px-4 text-gray-600 dark:text-gray-300 font-medium">{order.size}</td>
                     <td className="py-4 px-4">
-                      <span className="text-gray-800 font-bold">{order.quantity.toLocaleString()}</span>
+                      <span className="text-gray-800 dark:text-gray-100 font-bold">{order.quantity.toLocaleString()}</span>
                     </td>
-                    <td className="py-4 px-4 text-gray-600">
-                      <span className="inline-block bg-gray-100 px-2.5 py-1 rounded-lg text-xs font-medium">
+                    <td className="py-4 px-4 text-gray-600 dark:text-gray-300">
+                      <span className="inline-block bg-gray-100 dark:bg-gray-700 px-2.5 py-1 rounded-lg text-xs font-medium">
                         {materialLabel[order.material] ?? order.material}
                       </span>
                     </td>
                     <td className="py-4 px-4">
-                      <span className="text-sky-600 font-bold bg-sky-50 px-2.5 py-1 rounded-lg">
+                      <span className="text-sky-600 dark:text-sky-400 font-bold bg-sky-50 dark:bg-sky-900/30 px-2.5 py-1 rounded-lg">
                         {order.predicted_hours != null ? `${order.predicted_hours}h` : '-'}
                       </span>
                     </td>
                     <td className="py-4 px-4">
-                      <span className="text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg">
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-900/30 px-2.5 py-1 rounded-lg">
                         {order.actual_hours != null ? `${order.actual_hours}h` : '-'}
                       </span>
                     </td>
@@ -507,23 +506,23 @@ export default function Orders() {
       {/* Modal: Completar pedido */}
       {selected && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in slide-in-from-bottom-4">
-            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in slide-in-from-bottom-4">
+            <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="bg-emerald-600 p-2 rounded-lg">
                   <Clock size={18} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900">Completar Pedido</h3>
-                  <p className="text-xs text-gray-500">{selected.client_name}</p>
+                  <h3 className="font-bold text-gray-900 dark:text-gray-50">Completar Pedido</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{selected.client_name}</p>
                 </div>
               </div>
-              <button onClick={() => setSelected(null)} className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
+              <button onClick={() => setSelected(null)} className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
                 <X size={18} />
               </button>
             </div>
             <div className="p-6 space-y-4">
-              <div className="bg-sky-50 rounded-lg p-4 flex items-center justify-between border border-sky-100">
+              <div className="bg-sky-50 dark:bg-sky-900/20 rounded-lg p-4 flex items-center justify-between border border-sky-100 dark:border-sky-900">
                 <span className="text-sm text-sky-700 font-medium">Tiempo predicho por ML</span>
                 <div className="flex items-center gap-2">
                   <ArrowUpDown size={14} className="text-sky-600" />
@@ -531,7 +530,7 @@ export default function Orders() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">
+                <label className="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2">
                   Tiempo real de producción (horas)
                 </label>
                 <input
@@ -541,18 +540,18 @@ export default function Orders() {
                   value={actualHours}
                   onChange={(e) => setActualHours(e.target.value)}
                   placeholder="Ej: 5.5"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                  className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                   autoFocus
                 />
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-2">
                   Este dato mejora la precisión del modelo para futuras predicciones
                 </p>
               </div>
             </div>
-            <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3">
+            <div className="px-6 py-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 flex justify-end gap-3">
               <button
                 onClick={() => setSelected(null)}
-                className="px-4 py-2 text-sm text-gray-700 hover:text-gray-900 font-medium hover:bg-gray-100 rounded-lg transition-colors"
+                className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-50 font-medium hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
                 Cancelar
               </button>
@@ -571,20 +570,20 @@ export default function Orders() {
       {/* Modal: Importar Excel */}
       {showImportModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in slide-in-from-bottom-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in slide-in-from-bottom-4">
             {/* Modal header */}
-            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+            <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="bg-emerald-600 p-2 rounded-lg">
                   <Upload size={18} className="text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900">Importar desde Excel</h3>
-                  <p className="text-xs text-gray-500">{importRows.length} filas detectadas</p>
+                  <h3 className="font-bold text-gray-900 dark:text-gray-50">Importar desde Excel</h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{importRows.length} filas detectadas</p>
                 </div>
               </div>
               {!importing && (
-                <button onClick={closeImportModal} className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
+                <button onClick={closeImportModal} className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
                   <X size={18} />
                 </button>
               )}
@@ -593,19 +592,19 @@ export default function Orders() {
             {/* Result after import */}
             {importDone ? (
               <div className="p-8 text-center space-y-4">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto">
                   <CheckCircle size={32} className="text-emerald-600" />
                 </div>
-                <h4 className="text-xl font-bold text-gray-900">Importación Completada</h4>
+                <h4 className="text-xl font-bold text-gray-900 dark:text-gray-50">Importación Completada</h4>
                 <div className="flex justify-center gap-6">
                   <div className="text-center">
                     <div className="text-3xl font-black text-emerald-600">{importDone.success}</div>
-                    <div className="text-sm text-gray-500">importados</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">importados</div>
                   </div>
                   {importDone.failed > 0 && (
                     <div className="text-center">
                       <div className="text-3xl font-black text-red-500">{importDone.failed}</div>
-                      <div className="text-sm text-gray-500">fallidos</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">fallidos</div>
                     </div>
                   )}
                 </div>
@@ -619,7 +618,7 @@ export default function Orders() {
             ) : (
               <>
                 {/* Summary bar */}
-                <div className="px-6 py-3 bg-gray-50 border-b border-gray-100 flex items-center gap-4 text-sm">
+                <div className="px-6 py-3 bg-gray-50 dark:bg-gray-900/40 border-b border-gray-100 dark:border-gray-700 flex items-center gap-4 text-sm">
                   <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
                     <CheckCircle size={15} />
                     {validCount} válidas
@@ -630,7 +629,7 @@ export default function Orders() {
                       {errorCount} con errores (no se importarán)
                     </span>
                   )}
-                  <span className="ml-auto text-gray-400 text-xs">
+                  <span className="ml-auto text-gray-400 dark:text-gray-500 text-xs">
                     Columnas: cliente, tipo, tamaño, cantidad, material, estado (opcional)
                   </span>
                 </div>
@@ -638,28 +637,28 @@ export default function Orders() {
                 {/* Preview table */}
                 <div className="max-h-72 overflow-y-auto">
                   <table className="w-full text-xs">
-                    <thead className="sticky top-0 bg-gray-50 border-b border-gray-200">
+                    <thead className="sticky top-0 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
                       <tr>
-                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 uppercase tracking-wider">#</th>
-                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 uppercase tracking-wider">Cliente</th>
-                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 uppercase tracking-wider">Tipo</th>
-                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 uppercase tracking-wider">Tamaño</th>
-                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 uppercase tracking-wider">Cant.</th>
-                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 uppercase tracking-wider">Material</th>
-                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 uppercase tracking-wider">Estado</th>
-                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 uppercase tracking-wider">OK</th>
+                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">#</th>
+                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Cliente</th>
+                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Tipo</th>
+                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Tamaño</th>
+                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Cant.</th>
+                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Material</th>
+                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">Estado</th>
+                        <th className="text-left py-2.5 px-3 font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider">OK</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                       {importRows.map((row, i) => (
-                        <tr key={i} className={row.errors.length > 0 ? 'bg-red-50' : 'hover:bg-gray-50'}>
-                          <td className="py-2 px-3 text-gray-400">{i + 1}</td>
-                          <td className="py-2 px-3 font-medium text-gray-800 max-w-[120px] truncate">{row.client_name || '—'}</td>
-                          <td className="py-2 px-3 text-gray-600">{printTypeLabel[row.print_type] ?? row.print_type}</td>
-                          <td className="py-2 px-3 text-gray-600">{row.size}</td>
-                          <td className="py-2 px-3 text-gray-700 font-semibold">{row.quantity || '—'}</td>
-                          <td className="py-2 px-3 text-gray-600">{materialLabel[row.material] ?? row.material}</td>
-                          <td className="py-2 px-3 text-gray-600 capitalize">{row.status}</td>
+                        <tr key={i} className={row.errors.length > 0 ? 'bg-red-50 dark:bg-red-950/30' : 'hover:bg-gray-50 dark:hover:bg-gray-700/40'}>
+                          <td className="py-2 px-3 text-gray-400 dark:text-gray-500">{i + 1}</td>
+                          <td className="py-2 px-3 font-medium text-gray-800 dark:text-gray-100 max-w-[120px] truncate">{row.client_name || '—'}</td>
+                          <td className="py-2 px-3 text-gray-600 dark:text-gray-300">{printTypeLabel[row.print_type] ?? row.print_type}</td>
+                          <td className="py-2 px-3 text-gray-600 dark:text-gray-300">{row.size}</td>
+                          <td className="py-2 px-3 text-gray-700 dark:text-gray-200 font-semibold">{row.quantity || '—'}</td>
+                          <td className="py-2 px-3 text-gray-600 dark:text-gray-300">{materialLabel[row.material] ?? row.material}</td>
+                          <td className="py-2 px-3 text-gray-600 dark:text-gray-300 capitalize">{row.status}</td>
                           <td className="py-2 px-3">
                             {row.errors.length === 0 ? (
                               <CheckCircle size={14} className="text-emerald-500" />
@@ -679,14 +678,14 @@ export default function Orders() {
                 </div>
 
                 {/* Footer */}
-                <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-between items-center gap-3">
-                  <p className="text-xs text-gray-500">
+                <div className="px-6 py-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/40 flex justify-between items-center gap-3">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">
                     Solo se importarán las <strong>{validCount}</strong> filas válidas.
                   </p>
                   <div className="flex gap-2">
                     <button
                       onClick={closeImportModal}
-                      className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 rounded-lg font-medium transition-colors"
+                      className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg font-medium transition-colors"
                     >
                       Cancelar
                     </button>

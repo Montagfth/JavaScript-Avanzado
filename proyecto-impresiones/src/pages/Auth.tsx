@@ -1,13 +1,11 @@
 import { useState } from 'react';
 // ✨ Corrección 1: Quitamos 'ArrowLeft' de la lista porque no se estaba usando
 import { Mail, Lock, Printer, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
-interface AuthProps {
-  onSuccess: () => void;
-}
-
-export default function Auth({ onSuccess }: AuthProps) {
+export default function Auth() {
+  const navigate = useNavigate();
   const [mode, setMode] = useState<'login' | 'signup'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -55,7 +53,7 @@ export default function Auth({ onSuccess }: AuthProps) {
           setError(loginError.message);
         } else {
           setSuccess('Iniciando sesión...');
-          setTimeout(onSuccess, 1500);
+          setTimeout(() => navigate('/dashboard'), 1500);
         }
       }
     } catch (err: unknown) {

@@ -123,8 +123,8 @@ export default function Reports() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Reportes y Análisis</h1>
-        <p className="text-gray-500 mt-2">Estadísticas detalladas de tu producción</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50">Reportes y Análisis</h1>
+        <p className="text-gray-500 dark:text-gray-400 mt-2">Estadísticas detalladas de tu producción</p>
       </div>
 
       {/* Filters */}
@@ -136,7 +136,7 @@ export default function Reports() {
             className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
               dateRange === range
                 ? 'bg-sky-600 text-white shadow-md'
-                : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'
+                : 'bg-white text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-gray-300'
             }`}
           >
             <Calendar size={16} />
@@ -177,16 +177,16 @@ export default function Reports() {
       {/* Charts Section */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Print Type Distribution */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-100">
-            <h3 className="font-bold text-gray-900">Distribución por Tipo de Impresión</h3>
+            <h3 className="font-bold text-gray-900 dark:text-gray-50">Distribución por Tipo de Impresión</h3>
           </div>
           <div className="p-6 space-y-4">
             {printTypeStats.map((stat) => (
               <div key={stat.type}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700 capitalize">{stat.type}</span>
-                  <span className="text-sm font-bold text-gray-900">{stat.count}</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-200 capitalize">{stat.type}</span>
+                  <span className="text-sm font-bold text-gray-900 dark:text-gray-50">{stat.count}</span>
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2">
                   <div
@@ -202,16 +202,16 @@ export default function Reports() {
         </div>
 
         {/* Material Distribution */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-100">
-            <h3 className="font-bold text-gray-900">Distribución por Material</h3>
+            <h3 className="font-bold text-gray-900 dark:text-gray-50">Distribución por Material</h3>
           </div>
           <div className="p-6 space-y-4">
             {materialStats.map((stat) => (
               <div key={stat.material}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700 capitalize">{stat.material}</span>
-                  <span className="text-sm font-bold text-gray-900">{stat.count}</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-200 capitalize">{stat.material}</span>
+                  <span className="text-sm font-bold text-gray-900 dark:text-gray-50">{stat.count}</span>
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2">
                   <div
@@ -229,20 +229,20 @@ export default function Reports() {
 
       {/* Accuracy Table */}
       {completedOrders.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-2">
             <TrendingUp className="text-sky-600" size={20} />
-            <h3 className="font-bold text-gray-900">Análisis de Precisión</h3>
+            <h3 className="font-bold text-gray-900 dark:text-gray-50">Análisis de Precisión</h3>
           </div>
           <div className="p-6 overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100">
-                  <th className="text-left py-2 px-3 text-gray-500 font-semibold">Cliente</th>
-                  <th className="text-center py-2 px-3 text-gray-500 font-semibold">Predicho (h)</th>
-                  <th className="text-center py-2 px-3 text-gray-500 font-semibold">Real (h)</th>
-                  <th className="text-center py-2 px-3 text-gray-500 font-semibold">Error</th>
-                  <th className="text-center py-2 px-3 text-gray-500 font-semibold">Precisión</th>
+                  <th className="text-left py-2 px-3 text-gray-500 dark:text-gray-400 font-semibold">Cliente</th>
+                  <th className="text-center py-2 px-3 text-gray-500 dark:text-gray-400 font-semibold">Predicho (h)</th>
+                  <th className="text-center py-2 px-3 text-gray-500 dark:text-gray-400 font-semibold">Real (h)</th>
+                  <th className="text-center py-2 px-3 text-gray-500 dark:text-gray-400 font-semibold">Error</th>
+                  <th className="text-center py-2 px-3 text-gray-500 dark:text-gray-400 font-semibold">Precisión</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -257,10 +257,10 @@ export default function Reports() {
                       <td className="py-3 px-3 text-center text-sky-600 font-semibold">
                         {o.predicted_hours}h
                       </td>
-                      <td className="py-3 px-3 text-center text-gray-700 font-semibold">
+                      <td className="py-3 px-3 text-center text-gray-700 dark:text-gray-200 font-semibold">
                         {o.actual_hours}h
                       </td>
-                      <td className="py-3 px-3 text-center text-gray-500">{Math.round(err * 10) / 10}h</td>
+                      <td className="py-3 px-3 text-center text-gray-500 dark:text-gray-400">{Math.round(err * 10) / 10}h</td>
                       <td className="py-3 px-3 text-center">
                         <div className="flex items-center justify-center">
                           <div className="w-16 bg-gray-100 rounded-full h-1.5 mr-2">
@@ -275,7 +275,7 @@ export default function Reports() {
                               style={{ width: `${acc}%` }}
                             />
                           </div>
-                          <span className="text-xs font-bold text-gray-700 w-8 text-right">
+                          <span className="text-xs font-bold text-gray-700 dark:text-gray-200 w-8 text-right">
                             {Math.round(acc)}%
                           </span>
                         </div>
@@ -291,8 +291,8 @@ export default function Reports() {
 
       {/* Insights */}
       <div className="bg-gradient-to-br from-sky-50 to-emerald-50 border border-sky-200 rounded-2xl p-8">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Insights y Recomendaciones</h3>
-        <ul className="space-y-2 text-sm text-gray-700">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-gray-50 mb-4">Insights y Recomendaciones</h3>
+        <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-200">
           <li>
             ✓ Tu error promedio es de <span className="font-bold">{stats.avgError}h</span> - excelente
             precisión

@@ -4,6 +4,7 @@ import { Clock, PackageCheck, Loader2, TrendingUp, BarChart3, Zap, DollarSign, A
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { supabase, type Order } from '../lib/supabase';
 import { getModelMetrics, getFeatureImportance } from '../lib/mlModel';
+import { useTheme } from '../lib/theme';
 
 interface Stats {
   total: number;
@@ -22,6 +23,17 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const metrics = getModelMetrics();
   const featureImportance = getFeatureImportance();
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
+  // Colores de los gráficos según el tema activo
+  const gridStroke = isDark ? '#374151' : '#f0f0f0';
+  const axisStroke = isDark ? '#9ca3af' : '#999';
+  const tooltipStyle = {
+    backgroundColor: isDark ? '#1f2937' : '#fff',
+    border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
+    borderRadius: '8px',
+    color: isDark ? '#f3f4f6' : '#111827',
+  };
 
   useEffect(() => {
     supabase
@@ -97,7 +109,7 @@ export default function Dashboard() {
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
           <Loader2 className="animate-spin text-sky-600 mx-auto mb-4" size={40} />
-          <p className="text-gray-600 font-medium">Cargando datos en tiempo real...</p>
+          <p className="text-gray-600 dark:text-gray-300 font-medium">Cargando datos en tiempo real...</p>
         </div>
       </div>
     );
@@ -108,8 +120,8 @@ export default function Dashboard() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-black text-gray-900">Dashboard</h1>
-          <p className="text-gray-500 mt-2">Analítica en tiempo real de tu producción</p>
+          <h1 className="text-4xl font-black text-gray-900 dark:text-gray-50">Dashboard</h1>
+          <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-2">Analítica en tiempo real de tu producción</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 text-emerald-700 rounded-lg font-semibold text-sm">
           <Activity size={16} className="animate-pulse" />
@@ -151,7 +163,7 @@ export default function Dashboard() {
         ].map((kpi, i) => (
           <div
             key={i}
-            className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group cursor-pointer"
+            className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg transition-all duration-300 p-6 group cursor-pointer"
           >
             <div className="flex items-start justify-between mb-4">
               <div
@@ -163,8 +175,8 @@ export default function Dashboard() {
                 {kpi.trend}
               </span>
             </div>
-            <div className="text-4xl font-black text-gray-900 mb-1">{kpi.value}</div>
-            <div className="text-sm text-gray-600 font-medium">{kpi.label}</div>
+            <div className="text-4xl font-black text-gray-900 dark:text-gray-50 mb-1">{kpi.value}</div>
+            <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">{kpi.label}</div>
           </div>
         ))}
       </div>
@@ -197,25 +209,19 @@ export default function Dashboard() {
       {/* Charts Section */}
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Trend Chart */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-2">
+        <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-2">
             <TrendingUp className="text-sky-600" size={20} />
-            <h3 className="font-bold text-gray-900">Predicción vs Realidad (últimos 7)</h3>
+            <h3 className="font-bold text-gray-900 dark:text-gray-50">Predicción vs Realidad (últimos 7)</h3>
           </div>
           <div className="p-6">
             {trendData.length > 0 ? (
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={trendData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis dataKey="day" stroke="#999" />
-                  <YAxis stroke="#999" />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#fff',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px',
-                    }}
-                  />
+                  <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+                  <XAxis dataKey="day" stroke={axisStroke} />
+                  <YAxis stroke={axisStroke} />
+                  <Tooltip contentStyle={tooltipStyle} />
                   <Legend />
                   <Line
                     type="monotone"
@@ -236,7 +242,7 @@ export default function Dashboard() {
                 </LineChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-64 flex items-center justify-center text-gray-400">
+              <div className="h-64 flex items-center justify-center text-gray-400 dark:text-gray-500">
                 Datos insuficientes
               </div>
             )}
@@ -244,9 +250,9 @@ export default function Dashboard() {
         </div>
 
         {/* Status Pie Chart */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100">
-            <h3 className="font-bold text-gray-900">Estado de Pedidos</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+            <h3 className="font-bold text-gray-900 dark:text-gray-50">Estado de Pedidos</h3>
           </div>
           <div className="p-6">
             {distributionData.length > 0 ? (
@@ -266,11 +272,11 @@ export default function Dashboard() {
                       <Cell key={`cell-${index}`} fill={entry.fill} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip contentStyle={tooltipStyle} />
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-64 flex items-center justify-center text-gray-400">
+              <div className="h-64 flex items-center justify-center text-gray-400 dark:text-gray-500">
                 Sin datos
               </div>
             )}
@@ -279,18 +285,18 @@ export default function Dashboard() {
       </div>
 
       {/* Type Distribution */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-2">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-2">
           <Printer size={20} className="text-emerald-600" />
-          <h3 className="font-bold text-gray-900">Tipos de Impresión Más Solicitados</h3>
+          <h3 className="font-bold text-gray-900 dark:text-gray-50">Tipos de Impresión Más Solicitados</h3>
         </div>
         <div className="p-6">
           {printTypeData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={printTypeData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="name" stroke="#999" />
-                <YAxis stroke="#999" />
+                <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+                <XAxis dataKey="name" stroke={axisStroke} />
+                <YAxis stroke={axisStroke} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: '#fff',
@@ -302,7 +308,7 @@ export default function Dashboard() {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-64 flex items-center justify-center text-gray-400">
+            <div className="h-64 flex items-center justify-center text-gray-400 dark:text-gray-500">
               Sin datos
             </div>
           )}
@@ -311,14 +317,14 @@ export default function Dashboard() {
 
       {/* ML Model Section */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-3">
             <div className="bg-sky-600 p-2 rounded-lg">
               <Zap size={16} className="text-white" />
             </div>
             <div>
-              <h2 className="font-semibold text-gray-900">Modelo ML</h2>
-              <p className="text-xs text-gray-500">{metrics.algorithm}</p>
+              <h2 className="font-semibold text-gray-900 dark:text-gray-50">Modelo ML</h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{metrics.algorithm}</p>
             </div>
           </div>
           <div className="p-6 space-y-4">
@@ -328,21 +334,21 @@ export default function Dashboard() {
                 { label: 'MAE (hrs)', value: metrics.mae },
                 { label: 'RMSE (hrs)', value: metrics.rmse },
               ].map((m) => (
-                <div key={m.label} className="bg-gray-50 rounded-lg p-3 text-center border border-gray-100">
+                <div key={m.label} className="bg-gray-50 dark:bg-gray-700/40 rounded-lg p-3 text-center border border-gray-100 dark:border-gray-700">
                   <div className={`text-xl font-black ${m.good ? 'text-emerald-600' : 'text-sky-600'}`}>
                     {m.value}
                   </div>
-                  <div className="text-xs text-gray-500 mt-1 font-medium">{m.label}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1 font-medium">{m.label}</div>
                 </div>
               ))}
             </div>
 
-            <div className="pt-4 border-t border-gray-100">
+            <div className="pt-4 border-t border-gray-100 dark:border-gray-700">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-semibold text-gray-700">Precisión en Datos Reales</span>
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">Precisión en Datos Reales</span>
                 <span className="text-sm font-black text-emerald-600">{stats.accuracy}%</span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
                 <div
                   className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-3 rounded-full transition-all duration-1000 shadow-lg"
                   style={{ width: `${stats.accuracy}%` }}
@@ -351,40 +357,40 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-2">
-              <div className="bg-sky-50 rounded-lg p-3 text-center border border-sky-100">
-                <div className="text-xs text-sky-600 font-medium mb-1">Prom. Predicho</div>
+              <div className="bg-sky-50 dark:bg-sky-900/20 rounded-lg p-3 text-center border border-sky-100 dark:border-sky-900">
+                <div className="text-xs text-sky-600 dark:text-sky-400 font-medium mb-1">Prom. Predicho</div>
                 <div className="text-2xl font-black text-sky-600">{stats.avgPredicted}h</div>
               </div>
-              <div className="bg-emerald-50 rounded-lg p-3 text-center border border-emerald-100">
-                <div className="text-xs text-emerald-600 font-medium mb-1">Prom. Real</div>
+              <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-3 text-center border border-emerald-100 dark:border-emerald-900">
+                <div className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-1">Prom. Real</div>
                 <div className="text-2xl font-black text-emerald-600">{stats.avgActual}h</div>
               </div>
             </div>
 
-            <div className="bg-sky-50 rounded-lg p-3 text-xs text-sky-700 border border-sky-100 font-medium">
+            <div className="bg-sky-50 dark:bg-sky-900/20 rounded-lg p-3 text-xs text-sky-700 dark:text-sky-300 border border-sky-100 dark:border-sky-900 font-medium">
               Entrenado con {metrics.trainingSamples} muestras históricas
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-3">
             <div className="bg-emerald-600 p-2 rounded-lg">
               <TrendingUp size={16} className="text-white" />
             </div>
             <div>
-              <h2 className="font-semibold text-gray-900">Importancia de Variables</h2>
-              <p className="text-xs text-gray-500">Contribución al modelo</p>
+              <h2 className="font-semibold text-gray-900 dark:text-gray-50">Importancia de Variables</h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">Contribución al modelo</p>
             </div>
           </div>
           <div className="p-6 space-y-5">
             {featureImportance.map((f) => (
               <div key={f.feature}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-700">{f.feature}</span>
-                  <span className="text-sm font-black text-gray-900">{f.importance}%</span>
+                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">{f.feature}</span>
+                  <span className="text-sm font-black text-gray-900 dark:text-gray-50">{f.importance}%</span>
                 </div>
-                <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2.5 overflow-hidden">
                   <div
                     className="h-2.5 rounded-full transition-all duration-1000 shadow-md"
                     style={{ width: `${f.importance}%`, backgroundColor: f.color }}
@@ -393,8 +399,8 @@ export default function Dashboard() {
               </div>
             ))}
 
-            <div className="mt-6 pt-4 border-t border-gray-100">
-              <p className="text-xs text-gray-600 leading-relaxed text-justify">
+            <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700">
+              <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed text-justify">
                 La cantidad de copias es el factor más determinante (42%), seguido por el tipo de
                 impresión (28%). El tamaño y material tienen contribuciones menores pero significativas.
               </p>
@@ -405,46 +411,46 @@ export default function Dashboard() {
 
       {/* Precision Table */}
       {completedOrders.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-2">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-2">
             <Clock className="text-amber-500" size={20} />
-            <h3 className="font-bold text-gray-900">Análisis Detallado de Precisión</h3>
+            <h3 className="font-bold text-gray-900 dark:text-gray-50">Análisis Detallado de Precisión</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-100">
+              <thead className="bg-gray-50 dark:bg-gray-900/40 border-b border-gray-100 dark:border-gray-700">
                 <tr>
                   {['Cliente', 'Tipo', 'Tamaño', 'Cant.', 'Predicho', 'Real', 'Error', 'Precisión'].map((h) => (
                     <th
                       key={h}
-                      className="text-left py-3 px-4 text-xs font-bold text-gray-600 uppercase tracking-wider"
+                      className="text-left py-3 px-4 text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wider"
                     >
                       {h}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {completedOrders.slice(0, 8).map((order) => {
                   const err = Math.abs((order.predicted_hours ?? 0) - (order.actual_hours ?? 0));
                   const pct =
                     order.actual_hours ? Math.max(0, 100 - (err / order.actual_hours) * 100) : 0;
                   return (
-                    <tr key={order.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="py-3 px-4 font-semibold text-gray-800">{order.client_name}</td>
-                      <td className="py-3 px-4 text-gray-600 capitalize">{order.print_type}</td>
-                      <td className="py-3 px-4 text-gray-600 font-medium">{order.size}</td>
-                      <td className="py-3 px-4 text-gray-600">{order.quantity.toLocaleString()}</td>
+                    <tr key={order.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/40 transition-colors">
+                      <td className="py-3 px-4 font-semibold text-gray-800 dark:text-gray-100">{order.client_name}</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300 capitalize">{order.print_type}</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300 font-medium">{order.size}</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300">{order.quantity.toLocaleString()}</td>
                       <td className="py-3 px-4">
                         <span className="text-sky-600 font-bold">{order.predicted_hours}h</span>
                       </td>
                       <td className="py-3 px-4">
                         <span className="text-emerald-600 font-bold">{order.actual_hours}h</span>
                       </td>
-                      <td className="py-3 px-4 text-gray-500 font-medium">{Math.round(err * 10) / 10}h</td>
+                      <td className="py-3 px-4 text-gray-500 dark:text-gray-400 dark:text-gray-500 font-medium">{Math.round(err * 10) / 10}h</td>
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-12 bg-gray-100 rounded-full h-1.5">
+                          <div className="w-12 bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
                             <div
                               className={`h-1.5 rounded-full ${
                                 pct >= 90
