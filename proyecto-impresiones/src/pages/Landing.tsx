@@ -1,14 +1,15 @@
 import { ArrowRight, Zap, TrendingUp, BarChart3, Clock, Printer, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface LandingProps {
-  onNavigate: (page: string) => void;
   // ✨ Corrección: Cambiamos 'any' por 'unknown' para tipado seguro
   user: unknown;
 }
 
-export default function Landing({ onNavigate, user }: LandingProps) {
+export default function Landing({ user }: LandingProps) {
   const [faqOpen, setFaqOpen] = useState<number | null>(0);
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -156,7 +157,7 @@ export default function Landing({ onNavigate, user }: LandingProps) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-in fade-in slide-in-from-bottom-4 delay-200">
             {user ? (
               <button
-                onClick={() => onNavigate('dashboard')}
+                onClick={() => navigate('/dashboard')}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 Ir al Dashboard <ArrowRight size={20} />
@@ -164,7 +165,7 @@ export default function Landing({ onNavigate, user }: LandingProps) {
             ) : (
               <>
                 <button
-                  onClick={() => onNavigate('auth')}
+                  onClick={() => navigate('/auth')}
                   className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
                   Comenzar Gratis <ArrowRight size={20} />
@@ -365,7 +366,7 @@ export default function Landing({ onNavigate, user }: LandingProps) {
             Únete a 500+ empresas que ya optimizan con Impresiones Express
           </p>
           <button
-            onClick={() => onNavigate('auth')}
+            onClick={() => navigate('/auth')}
             className="inline-flex items-center gap-2 px-8 py-4 bg-white text-sky-600 rounded-xl font-bold hover:scale-105 transition-transform shadow-xl"
           >
             Comenzar Gratis Hoy <ArrowRight size={20} />

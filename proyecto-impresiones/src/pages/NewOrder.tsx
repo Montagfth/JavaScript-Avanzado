@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Printer, CheckCircle2, AlertTriangle, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { supabase, type PrintType, type Size, type Material } from '../lib/supabase';
 import { predictProductionHours } from '../lib/mlModel';
 import { notifyOrderCreated } from '../lib/edgeFunctions';
@@ -36,7 +37,8 @@ interface FormState {
   material: Material;
 }
 
-export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
+export default function NewOrder() {
+  const navigate = useNavigate();
   const [form, setForm] = useState<FormState>({
     client_name: '',
     print_type: 'digital',
@@ -128,7 +130,7 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
       });
       setPrediction(null);
       setPreviewCost(0);
-      setTimeout(onSuccess, 1800);
+      setTimeout(() => navigate('/orders'), 1800);
     }
   }
 
@@ -144,8 +146,8 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <h1 className="text-3xl font-black text-gray-900">Nuevo Pedido</h1>
-        <p className="text-gray-500 mt-2">El modelo ML predice automáticamente el tiempo de producción</p>
+        <h1 className="text-3xl font-black text-gray-900 dark:text-gray-100">Nuevo Pedido</h1>
+        <p className="text-gray-500 dark:text-gray-400 mt-2">El modelo ML predice automáticamente el tiempo de producción</p>
       </div>
 
       {success && (
@@ -167,21 +169,21 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Client Name Card */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-          <label className="block text-sm font-bold text-gray-700 mb-3">Nombre del Cliente *</label>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Nombre del Cliente *</label>
           <input
             type="text"
             value={form.client_name}
             onChange={(e) => handleChange('client_name', e.target.value)}
             placeholder="Ej: Empresa XYZ S.A."
-            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white"
+            className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all bg-gray-50 dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
             required
           />
         </div>
 
         {/* Print Type Selection */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-          <label className="block text-sm font-bold text-gray-700 mb-4">Tipo de Impresión *</label>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-4">Tipo de Impresión *</label>
           <div className="grid grid-cols-2 gap-3">
             {printTypes.map((pt) => (
               <button
@@ -190,13 +192,13 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
                 onClick={() => handleChange('print_type', pt.value)}
                 className={`text-left p-4 rounded-xl border-2 transition-all duration-300 ${
                   form.print_type === pt.value
-                    ? 'border-sky-500 bg-sky-50 ring-2 ring-sky-300'
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    ? 'border-sky-500 bg-sky-50 dark:bg-sky-900/30 ring-2 ring-sky-300 dark:ring-sky-700'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                 }`}
               >
                 <div className="text-2xl mb-2">{pt.icon}</div>
-                <div className="text-sm font-bold text-gray-800">{pt.label}</div>
-                <div className="text-xs text-gray-500 mt-1">{pt.desc}</div>
+                <div className="text-sm font-bold text-gray-800 dark:text-gray-100">{pt.label}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{pt.desc}</div>
               </button>
             ))}
           </div>
@@ -205,8 +207,8 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
         {/* Size and Quantity Grid */}
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Size */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-            <label className="block text-sm font-bold text-gray-700 mb-3">Tamaño *</label>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Tamaño *</label>
             <div className="grid grid-cols-3 gap-2">
               {sizes.map((s) => (
                 <button
@@ -216,7 +218,7 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
                   className={`px-3 py-2 rounded-lg text-sm font-bold transition-all ${
                     form.size === s.value
                       ? 'bg-sky-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
                   {s.label}
@@ -226,23 +228,23 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
           </div>
 
           {/* Quantity */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-            <label className="block text-sm font-bold text-gray-700 mb-3">Cantidad *</label>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+            <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Cantidad *</label>
             <input
               type="number"
               min="1"
               value={form.quantity}
               onChange={(e) => handleChange('quantity', e.target.value)}
               placeholder="Ej: 1000"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all bg-gray-50 focus:bg-white font-semibold text-lg"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all bg-gray-50 dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 font-semibold text-lg"
               required
             />
           </div>
         </div>
 
         {/* Material Selection */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-          <label className="block text-sm font-bold text-gray-700 mb-4">Tipo de Material *</label>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+          <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-4">Tipo de Material *</label>
           <div className="flex flex-wrap gap-2">
             {materials.map((m) => (
               <button
@@ -252,7 +254,7 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
                 className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
                   form.material === m.value
                     ? 'border-2 border-sky-500 bg-sky-600 text-white shadow-lg scale-105'
-                    : 'border-2 border-gray-200 text-gray-700 hover:border-gray-300 bg-white'
+                    : 'border-2 border-gray-200 text-gray-700 hover:border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:border-gray-600'
                 }`}
               >
                 <span className="mr-2">{m.icon}</span>
@@ -264,13 +266,13 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
 
         {/* ML Prediction Card */}
         {prediction !== null && (
-          <div className="bg-gradient-to-br from-sky-50 to-emerald-50 rounded-2xl border-2 border-sky-200 p-8 animate-in fade-in slide-in-from-bottom-4">
+          <div className="bg-gradient-to-br from-sky-50 to-emerald-50 dark:from-sky-950/40 dark:to-emerald-950/40 rounded-2xl border-2 border-sky-200 dark:border-sky-900 p-8 animate-in fade-in slide-in-from-bottom-4">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <div className="bg-sky-600 p-3 rounded-xl animate-pulse">
                   <Sparkles size={20} className="text-white" />
                 </div>
-                <span className="text-sm font-bold text-gray-700">Predicción ML</span>
+                <span className="text-sm font-bold text-gray-700 dark:text-gray-200">Predicción ML</span>
               </div>
               <span className="text-xs font-bold bg-emerald-600 text-white px-3 py-1.5 rounded-full">
                 92% Precisión
@@ -279,8 +281,8 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
 
             <div className="grid md:grid-cols-3 gap-6">
               {/* Time Prediction */}
-              <div className="bg-white rounded-xl p-4 border border-sky-100">
-                <div className="text-xs text-gray-600 font-medium mb-2">Tiempo Estimado</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-sky-100 dark:border-sky-900/50">
+                <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Tiempo Estimado</div>
                 <div className="flex items-baseline gap-2">
                   <div className="text-4xl font-black text-sky-600">{prediction}</div>
                   <div className="text-sm text-gray-600">horas</div>
@@ -288,16 +290,16 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
               </div>
 
               {/* Urgency Level */}
-              <div className="bg-white rounded-xl p-4 border border-sky-100">
-                <div className="text-xs text-gray-600 font-medium mb-2">Tipo de Servicio</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-sky-100 dark:border-sky-900/50">
+                <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Tipo de Servicio</div>
                 <div className={`inline-block text-lg font-black px-3 py-1.5 rounded-lg bg-${urgencyLabel?.color}-100 text-${urgencyLabel?.color}-700`}>
                   {urgencyLabel?.text}
                 </div>
               </div>
 
               {/* Estimated Cost */}
-              <div className="bg-white rounded-xl p-4 border border-sky-100">
-                <div className="text-xs text-gray-600 font-medium mb-2">Costo Estimado</div>
+              <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-sky-100 dark:border-sky-900/50">
+                <div className="text-xs text-gray-600 dark:text-gray-400 font-medium mb-2">Costo Estimado</div>
                 <div className="flex items-baseline gap-2">
                   <div className="text-3xl font-black text-emerald-600">${previewCost}</div>
                   <div className="text-sm text-gray-600">USD</div>
@@ -330,7 +332,7 @@ export default function NewOrder({ onSuccess }: { onSuccess: () => void }) {
       </form>
 
       {/* Info Box */}
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+      <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 text-sm text-amber-800 dark:text-amber-300">
         <p className="font-medium mb-2">💡 Consejo:</p>
         <p>Los datos de tiempo real ayudan a mejorar la precisión del modelo. Asegúrate de registrar los tiempos reales después de completar el pedido.</p>
       </div>
