@@ -1,0 +1,41 @@
+/*
+  Bootstrap scoped para Landing.tsx
+  ====================================
+  Se importa SOLO en Landing.tsx para evitar conflictos con Tailwind.
+  
+  Tailwind Preflight hace un reset global (normalize + opinionated defaults).
+  Bootstrap Reboot hace su propio reset.
+  Al tenerlos en el mismo scope global chocan.
+
+  Solución: importamos bootstrap/dist/css/bootstrap.min.css aquí
+  y este archivo se importa únicamente en Landing.tsx.
+  Tailwind seguirá funcionando en el resto de la app.
+
+  Nota: Tailwind Preflight ya corrió globalmente (index.css), pero sus
+  efectos base son compatibles con Bootstrap a nivel de utilities;
+  solo las tipografías base pueden diferir levemente (controlado abajo).
+*/
+
+/* Re-importamos solo lo necesario de Bootstrap para esta página */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/* ─── Overrides mínimos para coexistencia ─── */
+
+/* Bootstrap usa box-sizing: border-box por defecto igual que Tailwind preflight */
+/* No hay conflicto ahí. */
+
+/* Tailwind preflight pone line-height: inherit en <a>; Bootstrap lo pone en 1.5 */
+/* Para Landing lo forzamos al estilo Bootstrap */
+.landing-page a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Bootstrap reboot pone margin: 0 en body; Tailwind preflight también. OK. */
+
+/* Variables de color de la marca */
+:root {
+  --brand-primary: #0284c7;   /* sky-600 */
+  --brand-secondary: #059669; /* emerald-600 */
+  --brand-dark: #111827;      /* gray-900 */
+}

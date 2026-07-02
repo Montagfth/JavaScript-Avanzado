@@ -1,3 +1,4 @@
+import '../styles/landing-bootstrap.css';
 import { ArrowRight, Zap, TrendingUp, BarChart3, Clock, Printer, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,25 +17,29 @@ export default function Landing({ user }: LandingProps) {
       icon: <Zap size={24} />,
       title: 'Predicción en Tiempo Real',
       desc: 'IA que predice tiempos de producción con 92% de precisión',
-      color: 'sky',
+      bg: '#e0f2fe',
+      fg: '#0284c7',
     },
     {
       icon: <TrendingUp size={24} />,
       title: 'Optimización Automática',
       desc: 'Mejora continua con Machine Learning a partir de tus datos',
-      color: 'emerald',
+      bg: '#d1fae5',
+      fg: '#059669',
     },
     {
       icon: <BarChart3 size={24} />,
       title: 'Análisis Profundo',
       desc: 'Reportes y dashboards con métricas clave del negocio',
-      color: 'amber',
+      bg: '#fef3c7',
+      fg: '#d97706',
     },
     {
       icon: <Clock size={24} />,
       title: 'Gestión de Tiempos',
       desc: 'Controla cada etapa del proceso de producción',
-      color: 'violet',
+      bg: '#ede9fe',
+      fg: '#7c3aed',
     },
   ];
 
@@ -130,138 +135,260 @@ export default function Landing({ user }: LandingProps) {
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Header Hero */}
-      <header className="relative pt-20 pb-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-sky-50 via-transparent to-emerald-50 -z-10" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-sky-200/30 rounded-full blur-3xl -z-10 animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-200/30 rounded-full blur-3xl -z-10 animate-pulse" />
+    <div className="landing-page">
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-sky-100/80 backdrop-blur-sm rounded-full mb-8 border border-sky-200/50 animate-in fade-in slide-in-from-top">
-            <Zap size={16} className="text-sky-600" />
-            <span className="text-sm font-semibold text-sky-700">Nuevo: Integraciones con Zapier 🚀</span>
-          </div>
+      {/* ══════════════════════════════
+          HERO
+      ══════════════════════════════ */}
+      <header
+        style={{
+          background: 'linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #ecfdf5 100%)',
+          paddingTop: '5rem',
+          paddingBottom: '6rem',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Blobs decorativos */}
+        <div style={{
+          position: 'absolute', top: '-60px', right: '-60px',
+          width: '380px', height: '380px',
+          background: 'rgba(125,211,252,0.25)',
+          borderRadius: '50%', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: '-60px', left: '-60px',
+          width: '380px', height: '380px',
+          background: 'rgba(110,231,183,0.25)',
+          borderRadius: '50%', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none',
+        }} />
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-6 leading-tight animate-in fade-in slide-in-from-bottom-4">
-            Predice Tiempos de{' '}
-            <span className="bg-gradient-to-r from-sky-600 to-emerald-600 bg-clip-text text-transparent">
-              Producción con IA
-            </span>
-          </h1>
+        <div className="container px-4" style={{ position: 'relative', zIndex: 1 }}>
+          <div className="row justify-content-center">
+            <div className="col-12 col-lg-9 text-center">
 
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 delay-100">
-            Sistema inteligente basado en Machine Learning para optimizar tu clínica. Reduce retrasos, mejora la planificación y aumenta la rentabilidad.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-in fade-in slide-in-from-bottom-4 delay-200">
-            {user ? (
-              <button
-                onClick={() => navigate('/dashboard')}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all duration-300"
-              >
-                Ir al Dashboard <ArrowRight size={20} />
-              </button>
-            ) : (
-              <>
-                <button
-                  onClick={() => navigate('/auth')}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-sky-600 to-sky-700 text-white rounded-xl font-bold hover:shadow-xl hover:scale-105 transition-all duration-300"
+              {/* Badge — usa d-inline-flex para alinear ícono y texto */}
+              <div className="mb-4">
+                <span
+                  className="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill fw-semibold"
+                  style={{
+                    background: 'rgba(224,242,254,0.9)',
+                    color: '#0284c7',
+                    border: '1px solid rgba(125,211,252,0.5)',
+                    fontSize: '0.9rem',
+                  }}
                 >
-                  Comenzar Gratis <ArrowRight size={20} />
-                </button>
-                <button className="inline-flex items-center gap-2 px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl font-bold hover:border-gray-400 hover:bg-gray-50 transition-all duration-300">
-                  Ver Demo
-                </button>
-              </>
-            )}
-          </div>
+                  <Zap size={14} />
+                  Nuevo: Integraciones con Zapier 🚀
+                </span>
+              </div>
 
-          <div className="text-sm text-gray-500">
-            Sin tarjeta de crédito. Acceso instantáneo.
+              {/* Heading */}
+              <h1
+                className="fw-black mb-4"
+                style={{ color: '#111827', lineHeight: 1.1, fontSize: 'clamp(2.4rem, 6vw, 4.5rem)' }}
+              >
+                Predice Tiempos de{' '}
+                <span style={{
+                  background: 'linear-gradient(90deg,#0284c7,#059669)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
+                  Producción con IA
+                </span>
+              </h1>
+
+              {/* Subheading */}
+              <p
+                className="mb-5 mx-auto"
+                style={{ maxWidth: '580px', fontSize: '1.15rem', color: '#4b5563', lineHeight: 1.7 }}
+              >
+                Sistema inteligente basado en Machine Learning para optimizar tu clínica.
+                Reduce retrasos, mejora la planificación y aumenta la rentabilidad.
+              </p>
+
+              {/* CTAs */}
+              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center mb-4">
+                {user ? (
+                  <button
+                    onClick={() => navigate('/dashboard')}
+                    className="btn btn-lg fw-bold d-inline-flex align-items-center justify-content-center gap-2 shadow"
+                    style={{
+                      background: 'linear-gradient(135deg,#0284c7,#0369a1)',
+                      color: '#fff', borderRadius: '12px', border: 'none',
+                      transition: 'transform .2s, box-shadow .2s',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(2,132,199,0.4)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = ''; }}
+                  >
+                    Ir al Dashboard <ArrowRight size={20} />
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => navigate('/auth')}
+                      className="btn btn-lg fw-bold d-inline-flex align-items-center justify-content-center gap-2 shadow"
+                      style={{
+                        background: 'linear-gradient(135deg,#0284c7,#0369a1)',
+                        color: '#fff', borderRadius: '12px', border: 'none',
+                        transition: 'transform .2s, box-shadow .2s',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(2,132,199,0.4)'; }}
+                      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = ''; }}
+                    >
+                      Comenzar Gratis <ArrowRight size={20} />
+                    </button>
+                    <button
+                      className="btn btn-lg fw-bold d-inline-flex align-items-center justify-content-center gap-2"
+                      style={{
+                        borderRadius: '12px',
+                        border: '2px solid #d1d5db',
+                        color: '#374151',
+                        background: 'transparent',
+                        transition: 'all .2s',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.background = '#f9fafb'; e.currentTarget.style.borderColor = '#9ca3af'; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = '#d1d5db'; }}
+                    >
+                      Ver Demo
+                    </button>
+                  </>
+                )}
+              </div>
+
+              <p className="text-muted small mb-0">Sin tarjeta de crédito. Acceso instantáneo.</p>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+      {/* ══════════════════════════════
+          FEATURES
+      ══════════════════════════════ */}
+      <section className="py-5 px-0" style={{ background: 'rgba(255,255,255,0.85)' }}>
+        <div className="container px-4">
+          <h2 className="text-center fw-bold mb-5" style={{ color: '#111827', fontSize: '2rem' }}>
             Características Principales
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="row g-4">
             {features.map((feature, i) => (
-              <div
-                key={i}
-                className="p-8 rounded-2xl border border-gray-200/50 hover:border-gray-300 bg-white/80 hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px] group"
-              >
+              <div key={i} className="col-12 col-sm-6 col-xl-3">
                 <div
-                  className={`inline-flex p-3 rounded-xl bg-${feature.color}-100 text-${feature.color}-600 mb-4 group-hover:scale-110 transition-transform`}
+                  className="card h-100 border-0 shadow-sm p-4"
+                  style={{ borderRadius: '16px', transition: 'transform .3s, box-shadow .3s', cursor: 'default' }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.transform = 'translateY(-6px)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 20px 40px rgba(0,0,0,0.12)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '';
+                  }}
                 >
-                  {feature.icon}
+                  <div
+                    className="mb-3 d-inline-flex align-items-center justify-content-center p-3 rounded-3"
+                    style={{ background: feature.bg, color: feature.fg, width: '52px', height: '52px' }}
+                  >
+                    {feature.icon}
+                  </div>
+                  <h5 className="fw-bold mb-2" style={{ color: '#111827' }}>{feature.title}</h5>
+                  <p className="text-muted small mb-0">{feature.desc}</p>
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-sm text-gray-600">{feature.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+      {/* ══════════════════════════════
+          BENEFITS
+      ══════════════════════════════ */}
+      <section className="py-5">
+        <div className="container px-4">
+          <h2 className="text-center fw-bold mb-5" style={{ color: '#111827', fontSize: '2rem' }}>
             Resultados Probados
           </h2>
 
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="row g-4">
             {benefits.map((b, i) => (
-              <div
-                key={i}
-                className="text-center p-8 rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 hover:shadow-lg transition-all"
-              >
-                <div className="text-5xl mb-3">{b.icon}</div>
-                <div className="text-4xl font-black text-sky-600 mb-2">{b.number}</div>
-                <div className="text-gray-600 font-medium">{b.label}</div>
+              <div key={i} className="col-6 col-lg-3">
+                <div
+                  className="card text-center p-4 h-100 border"
+                  style={{
+                    borderRadius: '16px',
+                    background: 'linear-gradient(135deg,#f9fafb,#f3f4f6)',
+                    borderColor: '#e5e7eb',
+                    transition: 'box-shadow .2s, transform .2s',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                    (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.boxShadow = '';
+                    (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                  }}
+                >
+                  <div style={{ fontSize: '2.5rem', lineHeight: 1, marginBottom: '0.5rem' }}>{b.icon}</div>
+                  <div className="fw-black mb-1" style={{ fontSize: '2.2rem', color: '#0284c7' }}>{b.number}</div>
+                  <div className="fw-medium small" style={{ color: '#6b7280' }}>{b.label}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-sky-50 to-emerald-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+      {/* ══════════════════════════════
+          TESTIMONIALS
+      ══════════════════════════════ */}
+      <section className="py-5" style={{ background: 'linear-gradient(135deg,#f0f9ff,#ecfdf5)' }}>
+        <div className="container px-4">
+          <h2 className="text-center fw-bold mb-5" style={{ color: '#111827', fontSize: '2rem' }}>
             Lo que dicen nuestros clientes
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="row g-4">
             {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="p-8 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 rounded-full bg-sky-100 flex items-center justify-center text-2xl">
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <div className="font-bold text-gray-900">{t.name}</div>
-                    <div className="text-xs text-gray-500">
-                      {t.role} @ {t.company}
+              <div key={i} className="col-12 col-md-4">
+                <div
+                  className="card border h-100 p-4"
+                  style={{
+                    borderRadius: '16px',
+                    borderColor: '#e5e7eb',
+                    background: '#fff',
+                    transition: 'box-shadow .3s, transform .3s',
+                  }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 20px 40px rgba(0,0,0,0.12)';
+                    (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.boxShadow = '';
+                    (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                  }}
+                >
+                  <div className="d-flex align-items-center gap-3 mb-3">
+                    <div
+                      className="rounded-circle d-flex align-items-center justify-content-center fs-4 flex-shrink-0"
+                      style={{ width: '48px', height: '48px', background: '#e0f2fe' }}
+                    >
+                      {t.avatar}
+                    </div>
+                    <div>
+                      <div className="fw-bold" style={{ color: '#111827' }}>{t.name}</div>
+                      <div style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
+                        {t.role} @ {t.company}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <p className="text-gray-600 italic">"{t.text}"</p>
-                <div className="flex gap-1 mt-4">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className="text-yellow-400">
-                      ⭐
-                    </span>
-                  ))}
+                  <p className="fst-italic mb-3" style={{ color: '#4b5563' }}>"{t.text}"</p>
+                  <div className="d-flex gap-1 mt-auto">
+                    {[...Array(5)].map((_, j) => (
+                      <span key={j} style={{ color: '#fbbf24', fontSize: '1rem' }}>⭐</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
@@ -269,150 +396,244 @@ export default function Landing({ user }: LandingProps) {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+      {/* ══════════════════════════════
+          PRICING
+      ══════════════════════════════ */}
+      <section className="py-5">
+        <div className="container px-4">
+          <h2 className="text-center fw-bold mb-5" style={{ color: '#111827', fontSize: '2rem' }}>
             Planes para Todos los Tamaños
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          {/* py-3 en el row para dar espacio al card destacado sin overflow */}
+          <div className="row g-4 justify-content-center align-items-center py-3">
             {plans.map((plan, i) => (
-              <div
-                key={i}
-                className={`rounded-2xl p-8 transition-all duration-300 ${
-                  plan.highlight
-                    ? 'bg-gradient-to-br from-sky-600 to-sky-700 text-white shadow-2xl scale-105 border-0'
-                    : 'bg-white border border-gray-200 text-gray-900 hover:shadow-xl'
-                }`}
-              >
-                <h3 className={`text-2xl font-bold mb-1 ${plan.highlight ? 'text-white' : ''}`}>
-                  {plan.name}
-                </h3>
-                <p className={`text-sm mb-6 ${plan.highlight ? 'text-sky-100' : 'text-gray-500'}`}>
-                  {plan.desc}
-                </p>
-                <div className="mb-6">
-                  <span className="text-4xl font-black">{plan.price}</span>
-                </div>
-                <button
-                  className={`w-full py-3 rounded-xl font-bold mb-6 transition-all ${
-                    plan.highlight
-                      ? 'bg-white text-sky-600 hover:bg-sky-50'
-                      : 'bg-sky-600 text-white hover:bg-sky-700'
-                  }`}
+              <div key={i} className="col-12 col-md-4">
+                <div
+                  className="card h-100 p-4"
+                  style={{
+                    borderRadius: '20px',
+                    border: plan.highlight ? 'none' : '1px solid #e5e7eb',
+                    background: plan.highlight
+                      ? 'linear-gradient(135deg,#0284c7,#0369a1)'
+                      : '#fff',
+                    color: plan.highlight ? '#fff' : '#111827',
+                    /* Elevación via shadow en vez de scale para no romper el layout */
+                    boxShadow: plan.highlight
+                      ? '0 25px 50px rgba(2,132,199,0.35)'
+                      : '0 1px 4px rgba(0,0,0,0.06)',
+                    transition: 'box-shadow .3s, transform .3s',
+                  }}
+                  onMouseEnter={e => {
+                    if (!plan.highlight) {
+                      (e.currentTarget as HTMLElement).style.boxShadow = '0 20px 40px rgba(0,0,0,0.1)';
+                      (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
+                    }
+                  }}
+                  onMouseLeave={e => {
+                    if (!plan.highlight) {
+                      (e.currentTarget as HTMLElement).style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)';
+                      (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+                    }
+                  }}
                 >
-                  {plan.cta}
-                </button>
-                <ul className="space-y-3">
-                  {plan.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-2 text-sm">
-                      <span className={`${plan.highlight ? 'text-sky-200' : 'text-emerald-500'}`}>
-                        ✓
+                  {plan.highlight && (
+                    <div className="text-center mb-3">
+                      <span
+                        className="badge rounded-pill px-3 py-1 fw-semibold"
+                        style={{ background: 'rgba(255,255,255,0.2)', color: '#fff', fontSize: '0.75rem' }}
+                      >
+                        ⭐ Más Popular
                       </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                    </div>
+                  )}
 
-      {/* FAQ Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
-            Preguntas Frecuentes
-          </h2>
+                  <h4 className="fw-bold mb-1">{plan.name}</h4>
+                  <p className="small mb-4" style={{ color: plan.highlight ? '#bae6fd' : '#6b7280' }}>
+                    {plan.desc}
+                  </p>
 
-          <div className="space-y-4">
-            {faqItems.map((item, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-gray-200 bg-white overflow-hidden transition-all hover:shadow-md"
-              >
-                <button
-                  onClick={() => setFaqOpen(faqOpen === i ? null : i)}
-                  className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <span className="font-bold text-gray-900 text-left">{item.q}</span>
-                  <ChevronDown
-                    size={20}
-                    className={`text-gray-600 transition-transform ${
-                      faqOpen === i ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {faqOpen === i && (
-                  <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 animate-in fade-in slide-in-from-top">
-                    <p className="text-gray-600">{item.a}</p>
+                  <div className="mb-4">
+                    <span className="fw-black" style={{ fontSize: '2.5rem' }}>{plan.price}</span>
                   </div>
-                )}
+
+                  <button
+                    className="btn fw-bold w-100 mb-4"
+                    style={{
+                      borderRadius: '12px',
+                      padding: '12px',
+                      background: plan.highlight ? '#fff' : '#0284c7',
+                      color: plan.highlight ? '#0284c7' : '#fff',
+                      border: 'none',
+                      transition: 'opacity .2s',
+                    }}
+                    onMouseEnter={e => ((e.currentTarget as HTMLElement).style.opacity = '0.85')}
+                    onMouseLeave={e => ((e.currentTarget as HTMLElement).style.opacity = '1')}
+                  >
+                    {plan.cta}
+                  </button>
+
+                  <ul className="list-unstyled mb-0">
+                    {plan.features.map((f, j) => (
+                      <li key={j} className="d-flex align-items-start gap-2 mb-2 small">
+                        <span className="fw-bold flex-shrink-0" style={{ color: plan.highlight ? '#7dd3fc' : '#059669' }}>✓</span>
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-sky-600 to-emerald-600">
-        <div className="max-w-4xl mx-auto text-center text-white">
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
+      {/* ══════════════════════════════
+          FAQ
+      ══════════════════════════════ */}
+      <section className="py-5" style={{ background: '#f9fafb' }}>
+        <div className="container px-4">
+          <div className="row justify-content-center">
+            <div className="col-12 col-lg-8">
+              <h2 className="text-center fw-bold mb-5" style={{ color: '#111827', fontSize: '2rem' }}>
+                Preguntas Frecuentes
+              </h2>
+
+              <div className="d-flex flex-column gap-3">
+                {faqItems.map((item, i) => (
+                  <div
+                    key={i}
+                    className="card border overflow-hidden"
+                    style={{
+                      borderRadius: '14px',
+                      borderColor: '#e5e7eb',
+                      transition: 'box-shadow .2s',
+                    }}
+                    onMouseEnter={e => ((e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)')}
+                    onMouseLeave={e => ((e.currentTarget as HTMLElement).style.boxShadow = '')}
+                  >
+                    <button
+                      className="btn w-100 text-start d-flex justify-content-between align-items-center px-4 py-3"
+                      style={{ background: '#fff', border: 'none', fontWeight: 700, color: '#111827', borderRadius: 0 }}
+                      onClick={() => setFaqOpen(faqOpen === i ? null : i)}
+                    >
+                      <span className="me-3">{item.q}</span>
+                      <ChevronDown
+                        size={20}
+                        style={{
+                          color: '#6b7280',
+                          transition: 'transform .3s',
+                          transform: faqOpen === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                          flexShrink: 0,
+                        }}
+                      />
+                    </button>
+                    {faqOpen === i && (
+                      <div
+                        className="px-4 py-3"
+                        style={{ background: '#f8fafc', borderTop: '1px solid #f1f5f9' }}
+                      >
+                        <p className="mb-0" style={{ color: '#4b5563' }}>{item.a}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════
+          CTA FINAL
+      ══════════════════════════════ */}
+      <section
+        className="text-white text-center"
+        style={{
+          background: 'linear-gradient(135deg,#0284c7,#059669)',
+          padding: '5rem 1.5rem',
+        }}
+      >
+        <div className="mx-auto" style={{ maxWidth: '700px' }}>
+          <h2 className="fw-black mb-3" style={{ fontSize: 'clamp(1.8rem,5vw,3rem)' }}>
             ¿Listo para transformar tu producción?
           </h2>
-          <p className="text-xl mb-8 text-sky-100">
+          <p className="mb-5" style={{ fontSize: '1.15rem', color: '#bae6fd' }}>
             Únete a 500+ empresas que ya optimizan con Impresiones Express
           </p>
           <button
             onClick={() => navigate('/auth')}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-sky-600 rounded-xl font-bold hover:scale-105 transition-transform shadow-xl"
+            className="btn btn-lg fw-bold d-inline-flex align-items-center gap-2 shadow-lg"
+            style={{
+              background: '#fff',
+              color: '#0284c7',
+              borderRadius: '12px',
+              border: 'none',
+              padding: '14px 32px',
+              transition: 'transform .2s, box-shadow .2s',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.transform = 'scale(1.05)';
+              (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 40px rgba(0,0,0,0.2)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+              (e.currentTarget as HTMLElement).style.boxShadow = '';
+            }}
           >
             Comenzar Gratis Hoy <ArrowRight size={20} />
           </button>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Printer size={20} className="text-sky-400" />
-                <span className="font-bold text-white">Impresiones Express</span>
+      {/* ══════════════════════════════
+          FOOTER
+      ══════════════════════════════ */}
+      <footer className="py-5" style={{ background: '#111827', color: '#d1d5db' }}>
+        <div className="container px-4">
+          <div className="row g-4 mb-4">
+            {/* Brand */}
+            <div className="col-12 col-sm-6 col-md-4 col-lg-3">
+              <div className="d-flex align-items-center gap-2 mb-3">
+                <Printer size={20} style={{ color: '#38bdf8' }} />
+                <span className="fw-bold text-white">Impresiones Express</span>
               </div>
-              <p className="text-sm text-gray-400">Optimización de producción con IA</p>
+              <p className="small mb-0" style={{ color: '#9ca3af' }}>
+                Optimización de producción con IA
+              </p>
             </div>
-            {['Producto', 'Empresa', 'Legal'].map((col, i) => (
-              <div key={i}>
-                <h4 className="font-bold text-white mb-4">{col}</h4>
-                <ul className="space-y-2 text-sm">
-                  <li>
-                    <a href="#" className="hover:text-sky-400 transition-colors">
-                      Características
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:text-sky-400 transition-colors">
-                      Precios
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:text-sky-400 transition-colors">
-                      Blog
-                    </a>
-                  </li>
+
+            {/* Link columns */}
+            {['Producto', 'Empresa', 'Legal'].map((col) => (
+              <div key={col} className="col-6 col-sm-6 col-md-4 col-lg-3">
+                <h6 className="fw-bold text-white mb-3">{col}</h6>
+                <ul className="list-unstyled small mb-0">
+                  {['Características', 'Precios', 'Blog'].map((link) => (
+                    <li key={link} className="mb-2">
+                      <a
+                        href="#"
+                        className="text-decoration-none"
+                        style={{ color: '#9ca3af', transition: 'color .2s' }}
+                        onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = '#38bdf8')}
+                        onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = '#9ca3af')}
+                      >
+                        {link}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}
           </div>
-          <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-            <p>&copy; 2026 Impresiones Express. Todos los derechos reservados.</p>
-          </div>
+
+          <hr style={{ borderColor: '#1f2937', opacity: 1 }} />
+
+          <p className="text-center small mb-0" style={{ color: '#6b7280' }}>
+            &copy; 2026 Impresiones Express. Todos los derechos reservados.
+          </p>
         </div>
       </footer>
+
     </div>
   );
 }
