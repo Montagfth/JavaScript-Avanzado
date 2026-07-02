@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
+    "bootstrap": "^5.3.8",
     "chart.js": "^4.5.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.344.0",
